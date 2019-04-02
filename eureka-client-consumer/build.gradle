@@ -1,0 +1,46 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.16.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.eureka.cloud'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+ext {
+	springCloudVersion = 'Edgware.SR4'
+}
+
+dependencies {
+	compile('org.springframework.cloud:spring-cloud-starter-eureka')
+	//compile("org.springframework.boot:spring-boot-devtools")
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix'
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-netflix-hystrix-dashboard'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-ribbon'
+	
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}

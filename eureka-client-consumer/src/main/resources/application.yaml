@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: eureka-client-consumer
+
+server:
+  port: 8072
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+  instance:
+    hostname: localhost
+    instanceId: ${spring.application.name}:${random.value}
+    

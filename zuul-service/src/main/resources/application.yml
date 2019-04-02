@@ -1,0 +1,48 @@
+zuul:
+  #Service will be mapped under the /api URI
+   prefix: /api
+   routes:
+      producer:
+         path: /producer/**
+         #url: http://localhost:8071
+         serviceId: eureka-client-producer
+      consumer:
+         path: /consumer/**
+         serviceId: eureka-client-consumer
+
+management:
+   security:
+      enabled: false
+
+eureka:
+   client:
+      registerWithEureka: true
+      serviceUrl:
+         defaultZone: http://localhost:8070/eureka/
+      fetchRegistry: true
+   instance:
+      preferIpAddress: true
+      hostname: localhost
+      instanceId: ${spring.application.name}:${random.value}
+
+server:
+   port: 8090
+
+spring:
+   application:
+      name: zuul-service
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+   ReadTimeout: 60000
+   ConnectTimeout: 60000
+   eureka:
+      enabled: true
+

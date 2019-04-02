@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: eureka-client-consumer
+
+server:
+  port: 8072
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    hostname: localhost
+    instanceId: ${spring.application.name}:${random.value}
+    

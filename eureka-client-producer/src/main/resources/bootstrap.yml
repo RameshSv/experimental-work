@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: eureka-client-producer
+
+server:
+  port: 8071
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    hostname: localhost
+    instanceId: ${spring.application.name}:${random.value}
+    
+    
