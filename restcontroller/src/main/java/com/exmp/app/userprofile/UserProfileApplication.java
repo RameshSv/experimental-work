@@ -1,12 +1,12 @@
-package com.exmp.app.restcontroller;
+package com.exmp.app.userprofile;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestcontrollerApplication {
+public class UserProfileApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RestcontrollerApplication.class, args);
+		SpringApplication.run(UserProfileApplication.class, args);
 	}
 }
