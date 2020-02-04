@@ -1,4 +1,4 @@
-package com.exmp.app.userprofile;
+package com.sb.app.userprofile;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
