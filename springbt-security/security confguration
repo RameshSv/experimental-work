@@ -1,0 +1,107 @@
+can you please give me spring security example without WebSecurityConfigurerAdapter
+Sure, here's an example of how you can configure Spring Security 5.x without using the WebSecurityConfigurerAdapter class:
+
+Copy code
+@Configuration
+public class SecurityConfig {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Bean
+    public HttpSecurity httpSecurity(HttpSecurityBuilder httpSecurityBuilder) throws Exception {
+        httpSecurityBuilder
+            .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/**").permitAll()
+                .and()
+            .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home", true)
+                .failureUrl("/login?error=true")
+                .and()
+            .logout()
+                .logoutSuccessUrl("/login?logout=true")
+                .and()
+            .authenticationProvider(authenticationProvider())
+            .csrf().disable();
+        return httpSecurityBuilder.build();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+This example uses the HttpSecurity class directly and configure it using a builder pattern. The AuthenticationManager and AuthenticationProvider are defined as beans and they are configured to use a userDetailsService and a passwordEncoder.
+
+It also configures the login and logout page, and protection for certain URLs and roles as mentioned in the previous example.
+
+This is just one example of how you can configure Spring Security 5.x without using the WebSecurityConfigurerAdapter class. You can customize this example to suit the specific needs of your application.
+
+It's worth noting that using WebSecurityConfigurerAdapter is just a convenience class that makes it easy to configure Spring Security in your application, you can always configure it directly without using it.
+
+
+
+
+rameshredddy.salla@gmail.com
+Give me example with SecurityFilterChain
+Sure, here's an example of how you can configure Spring Security 5.x using the SecurityFilterChain class:
+
+Copy code
+@Configuration
+public class SecurityConfig {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/**").permitAll()
+                .and()
+            .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home", true)
+                .failureUrl("/login?error=true")
+                .and()
+            .logout()
+                .logoutSuccessUrl("/login?logout=true")
+                .and()
+            .authenticationProvider(authenticationProvider())
+            .csrf().disable();
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+In this example, SecurityFilterChain is returned by the securityFilterChain method which takes an instance of HttpSecurity as a parameter.
+The HttpSecurity class is used to configure the security settings and it is built by the http.build() method.
+It's also configure the same way as previous examples, with login/logout pages, authentication provider, password encoder and protection for certain URLs and roles.
+
+SecurityFilterChain is a powerful class that allows you to configure and customize the security settings for your application. It can be used to configure security settings for individual requests, and it also provides a way to add custom filters to the filter chain.
+
+This is just one example of how you can use the SecurityFilterChain class to configure Spring Security in your application. You can customize this example to suit the specific needs of your application, and you can also add custom filters to the filter chain as per your requirement
